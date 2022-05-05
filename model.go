@@ -14,9 +14,9 @@ import (
 var db *mongo.Database
 
 type Model struct {
-	ID        string `json:"id" bson:"_id,omitempty"`
-	CreatedAt int64  `json:"createdAt" bson:"createdAt,omitempty"`
-	UpdatedAt int64  `json:"updatedAt" bson:"updatedAt,omitempty"`
+	ID        string `json:"id" bson:"_id,omitempty" url:"id,omitempty"`
+	CreatedAt int64  `json:"createdAt" bson:"createdAt,omitempty" url:"createdAt,omitempty"`
+	UpdatedAt int64  `json:"updatedAt" bson:"updatedAt,omitempty" url:"updatedAt,omitempty"`
 }
 
 func Init(d *mongo.Database) {
