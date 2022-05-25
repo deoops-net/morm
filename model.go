@@ -116,7 +116,25 @@ func (m *Model) SetCreateFields() {
 }
 
 func getTableName(d interface{}) string {
-	tableName := reflect.TypeOf(d).Elem().Name()
+	var tableName string
+	// data := reflect.Indirect(reflect.ValueOf(d))
+	// t := reflect.TypeOf(data)
+	source := reflect.ValueOf(d).Elem()
+	sourceType := source.Type()
+	// default
+	tableName = sourceType.Name()
 	tableName = strings.ToLower(string(tableName[0])) + tableName[1:] + "s"
+	// check custom table name
+	for i := 0; i < source.NumField(); i++ {
+		tag := sourceType.Field(i).Tag.Get("morm")
+		kvs := strings.Split(tag, "&")
+		for _, v := range kvs {
+			param := strings.Split(v, "=")
+			if len(param) == 2 && param[0] == "colName" {
+				tableName = param[1]
+			}
+		}
+	}
+
 	return tableName
 }
