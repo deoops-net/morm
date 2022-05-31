@@ -90,6 +90,8 @@ func (m *Model) UpdateOneBy(d, q, s interface{}, o *options.UpdateOptions) (*mon
 	tableName := getTableName(d)
 	m.SetUpdateFields()
 
+	// TODO if s is not bson.M
+	s.(bson.M)["$set"].(bson.M)["updatedAt"] = time.Now().UnixMilli()
 	return db.Collection(tableName).UpdateOne(context.Background(), q, s, o)
 }
 
