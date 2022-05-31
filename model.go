@@ -104,6 +104,14 @@ func (m *Model) SetID(id string) {
 	m.ID = id
 }
 
+func (m *Model) GetID() string {
+	return m.ID
+}
+
+func (m *Model) GetObjectID() (primitive.ObjectID, error) {
+	return primitive.ObjectIDFromHex(m.ID)
+}
+
 func (m *Model) UnsetID() {
 	m.ID = ""
 }
