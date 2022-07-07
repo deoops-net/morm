@@ -46,6 +46,12 @@ func (m *Model) Create(d interface{}) (*mongo.InsertOneResult, error) {
 	return db.Collection(tableName).InsertOne(context.Background(), d)
 }
 
+func (m *Model) CreateMany(d interface{}, r []interface{}) (*mongo.InsertManyResult, error) {
+	tableName := getTableName(d)
+	// TODO add createdAt
+	return db.Collection(tableName).InsertMany(context.Background(), r)
+}
+
 func (m *Model) FindOne(d interface{}) error {
 	tableName := getTableName(d)
 	id, err := primitive.ObjectIDFromHex(m.ID)

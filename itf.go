@@ -7,6 +7,7 @@ import (
 
 type ModelI interface {
 	Create(d interface{}) (*mongo.InsertOneResult, error)
+	CreateMany(d interface{}, r []interface{}) (*mongo.InsertManyResult, error)
 	FindOne(d interface{}) error
 	FindOneBy(d, q interface{}) error
 	FindManyBy(d, q interface{}, o *options.FindOptions) (*mongo.Cursor, error)
