@@ -51,6 +51,10 @@ func Create(m ModelI) (*mongo.InsertOneResult, error) {
 	return m.Create(m)
 }
 
+func CreateMany(m ModelI, d interface{}, r []interface{}) (*mongo.InsertManyResult, error) {
+	return m.CreateMany(d, r)
+}
+
 func DeleteOne(m ModelI) (*mongo.DeleteResult, error) {
 	return m.DeleteOne(m)
 }
