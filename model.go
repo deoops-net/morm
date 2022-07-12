@@ -23,6 +23,12 @@ func Init(d *mongo.Database) {
 	db = d
 }
 
+func (m *Model) CreateIndex(d interface{}, i mongo.IndexModel, opt *options.CreateIndexesOptions) (string, error) {
+	tableName := getTableName(d)
+
+	return db.Collection(tableName).Indexes().CreateOne(context.Background(), i, opt)
+}
+
 func (m *Model) FindOneBy(d interface{}, query interface{}) error {
 	tableName := getTableName(d)
 

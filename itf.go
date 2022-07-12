@@ -6,6 +6,7 @@ import (
 )
 
 type ModelI interface {
+	CreateIndex(m interface{}, i mongo.IndexModel, opt *options.CreateIndexesOptions) (string, error)
 	Create(d interface{}) (*mongo.InsertOneResult, error)
 	CreateMany(d interface{}, r []interface{}) (*mongo.InsertManyResult, error)
 	FindOne(d interface{}) error
@@ -17,6 +18,10 @@ type ModelI interface {
 	UpdateManyBy(d, q, s interface{}, o *options.UpdateOptions) (*mongo.UpdateResult, error)
 	DeleteOne(d interface{}) (*mongo.DeleteResult, error)
 	DeleteBy(d, q interface{}) (*mongo.DeleteResult, error)
+}
+
+func CreateIndex(m ModelI, i mongo.IndexModel, opt *options.CreateIndexesOptions) (string, error) {
+	return m.CreateIndex(m, i, opt)
 }
 
 func FindOne(m ModelI) error {
