@@ -35,6 +35,8 @@ func (m *Model) FindOneBy(d interface{}, query interface{}) error {
 	return db.Collection(tableName).FindOne(context.Background(), query).Decode(d)
 }
 
+// conn.Create
+
 func (m *Model) FindManyBy(d interface{}, q interface{}, o *options.FindOptions) (*mongo.Cursor, error) {
 	tableName := getTableName(d)
 	return db.Collection(tableName).Find(context.Background(), q, o)
@@ -82,6 +84,12 @@ func (m *Model) DeleteBy(d, q interface{}) (*mongo.DeleteResult, error) {
 	tableName := getTableName(d)
 
 	return db.Collection(tableName).DeleteMany(context.Background(), q)
+}
+
+func (m *Model) DistinctBy(f string) ([]interface{}, error) {
+	tableName := getTableName(m)
+
+	return db.Collection(tableName).Distinct(context.Background(), f, nil, nil)
 }
 
 func (m *Model) UpdateOne(d interface{}) (*mongo.UpdateResult, error) {

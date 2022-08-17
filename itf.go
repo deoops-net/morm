@@ -18,6 +18,12 @@ type ModelI interface {
 	UpdateManyBy(d, q, s interface{}, o *options.UpdateOptions) (*mongo.UpdateResult, error)
 	DeleteOne(d interface{}) (*mongo.DeleteResult, error)
 	DeleteBy(d, q interface{}) (*mongo.DeleteResult, error)
+	DistinctBy(f string) ([]interface{}, error)
+}
+
+// DistinctBy 按字段查唯一集
+func DistinctBy(m ModelI, f string) ([]interface{}, error) {
+	return m.DistinctBy(f)
 }
 
 func CreateIndex(m ModelI, i mongo.IndexModel, opt *options.CreateIndexesOptions) (string, error) {
