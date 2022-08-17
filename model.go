@@ -2,7 +2,6 @@ package morm
 
 import (
 	"context"
-	fmt "fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -87,12 +86,13 @@ func (m *Model) DeleteBy(d, q interface{}) (*mongo.DeleteResult, error) {
 	return db.Collection(tableName).DeleteMany(context.Background(), q)
 }
 
-func (m *Model) DistinctBy(d interface{}, f string) ([]interface{}, error) {
+func (m *Model) DistinctBy(d interface{}, f string, ft bson.D) ([]interface{}, error) {
 	tableName := getTableName(d)
-	fmt.Println("###########################")
-	fmt.Println(tableName)
+	if ft == nil {
+		ft = bson.D{}
+	}
 
-	return db.Collection(tableName).Distinct(context.Background(), f, nil, nil)
+	return db.Collection(tableName).Distinct(context.Background(), f, ft, nil)
 }
 
 func (m *Model) UpdateOne(d interface{}) (*mongo.UpdateResult, error) {

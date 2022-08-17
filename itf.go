@@ -1,6 +1,7 @@
 package morm
 
 import (
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -18,12 +19,12 @@ type ModelI interface {
 	UpdateManyBy(d, q, s interface{}, o *options.UpdateOptions) (*mongo.UpdateResult, error)
 	DeleteOne(d interface{}) (*mongo.DeleteResult, error)
 	DeleteBy(d, q interface{}) (*mongo.DeleteResult, error)
-	DistinctBy(d interface{}, f string) ([]interface{}, error)
+	DistinctBy(d interface{}, f string, ft bson.D) ([]interface{}, error)
 }
 
 // DistinctBy 按字段查唯一集
-func DistinctBy(m ModelI, f string) ([]interface{}, error) {
-	return m.DistinctBy(m, f)
+func DistinctBy(m ModelI, f string, ft bson.D) ([]interface{}, error) {
+	return m.DistinctBy(m, f, ft)
 }
 
 func CreateIndex(m ModelI, i mongo.IndexModel, opt *options.CreateIndexesOptions) (string, error) {
