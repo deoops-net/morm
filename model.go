@@ -86,8 +86,8 @@ func (m *Model) DeleteBy(d, q interface{}) (*mongo.DeleteResult, error) {
 	return db.Collection(tableName).DeleteMany(context.Background(), q)
 }
 
-func (m *Model) DistinctBy(f string) ([]interface{}, error) {
-	tableName := getTableName(m)
+func (m *Model) DistinctBy(d interface{}, f string) ([]interface{}, error) {
+	tableName := getTableName(d)
 
 	return db.Collection(tableName).Distinct(context.Background(), f, nil, nil)
 }
